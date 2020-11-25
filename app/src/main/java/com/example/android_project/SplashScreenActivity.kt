@@ -10,6 +10,7 @@ class SplashScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
 
+        supportActionBar?.hide()
         val splash=findViewById<ImageView>(R.id.splash)
         splash.alpha=0f
         splash.animate().setDuration(1500).alpha(1f).withEndAction{
