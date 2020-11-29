@@ -3,6 +3,7 @@ package com.example.android_project
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 
@@ -29,7 +30,7 @@ class RestaurantAdapter : RecyclerView.Adapter<RestaurantAdapter.RestaurantAdapt
     }
 
     class RestaurantAdapterVH(restaurantView: View): RecyclerView.ViewHolder(restaurantView){
-        val name=  restaurantView.rtName
+        val name= restaurantView.findViewById<TextView>(R.id.rtName)
     }
 
 }
