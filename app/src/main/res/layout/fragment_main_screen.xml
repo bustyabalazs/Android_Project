@@ -12,4 +12,13 @@
         android:layout_height="match_parent"
         android:id="@+id/recyclerView"
         android:layout_margin="4dp" />
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:scaleY="4"
+        android:indeterminateTint="@color/cardview_shadow_start_color"
+        android:indeterminateBehavior="repeat"
+        android:indeterminate="true" />
 </LinearLayout>
