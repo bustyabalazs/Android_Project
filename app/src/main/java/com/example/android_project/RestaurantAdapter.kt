@@ -1,5 +1,6 @@
 package com.example.android_project
 
+import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,21 +10,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
 
-class RestaurantAdapter(val movies: List<Restaurant>): RecyclerView.Adapter<RestaurantViewHolder>() {
+class RestaurantAdapter(val restaurants: List<Restaurant>): RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantViewHolder {
+        d("danial","name: viewholder" )
         val view = LayoutInflater.from(parent.context).inflate(R.layout.row_items, parent, false)
         return RestaurantViewHolder(view)
     }
 
     override fun getItemCount(): Int {
-        return movies.size
+        return restaurants.size
     }
 
     override fun onBindViewHolder(holder: RestaurantViewHolder, position: Int) {
-        return holder.bind(movies[position])
-    }
-}
+        d("danial","name: ${restaurants[position].name}" )
+        return holder.bind(restaurants[position])
 
+    }
     class RestaurantViewHolder(itemView : View): RecyclerView.ViewHolder(itemView){
         private val photo: ImageView = itemView.findViewById(R.id.restaurant_photo)
         private val name:TextView = itemView.findViewById(R.id.name)
@@ -35,6 +37,8 @@ class RestaurantAdapter(val movies: List<Restaurant>): RecyclerView.Adapter<Rest
             name.text = "Title: "+restaurant.name
             address.text = restaurant.address
             phone.text = "Phone number : "+restaurant.phone
+            d("danial","here we are")
         }
-
     }
+}
+

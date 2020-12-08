@@ -6,7 +6,9 @@ import retrofit2.http.Query
 
 interface OpenTableEndPoints {
 
-    @GET("GET /api/restaurants")
-    fun getRestaurants(@Query("api_key") key: String): Call<Restaurants>
+    @GET("restaurants")
+    //fun getRestaurants(@Query("restaurants") key: String): Call<Restaurants>
+  //  d("danial","here we are")
+    fun getRestaurants(@Query("country") country :String): Call<Restaurants>
 
 }
