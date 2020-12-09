@@ -1,5 +1,7 @@
 package com.example.android_project
 
+import java.io.Serializable
+
 data class Restaurants(
         val count: Number,
         val per_page: Number,
@@ -23,4 +25,4 @@ data class Restaurant (
         val reserve_url:String,
         val mobile_reserve_url:String,
         val image_url:String
-)
+):Serializable

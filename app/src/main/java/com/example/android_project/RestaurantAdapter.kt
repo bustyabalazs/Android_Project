@@ -4,15 +4,17 @@ import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import retrofit2.Callback
 
 
-class RestaurantAdapter(val restaurants: List<Restaurant>): RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder>() {
+class RestaurantAdapter(var restaurants: List<Restaurant>, var clickListener: ClickListener): RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantViewHolder {
-        d("danial","name: viewholder" )
         val view = LayoutInflater.from(parent.context).inflate(R.layout.row_items, parent, false)
         return RestaurantViewHolder(view)
     }
@@ -22,7 +24,10 @@ class RestaurantAdapter(val restaurants: List<Restaurant>): RecyclerView.Adapter
     }
 
     override fun onBindViewHolder(holder: RestaurantViewHolder, position: Int) {
-        d("danial","name: ${restaurants[position].name}" )
+        holder.itemView.setOnClickListener{
+            clickListener.clickedItem(restaurants[position])
+            //(Navigation.findNavController(context).navigate(R.id.action_mainScreenFragment_to_detailScreen) restaurants[position])
+        }
         return holder.bind(restaurants[position])
 
     }
@@ -34,11 +39,13 @@ class RestaurantAdapter(val restaurants: List<Restaurant>): RecyclerView.Adapter
 
         fun bind(restaurant: Restaurant) {
             Glide.with(itemView.context).load(restaurant.image_url).into(photo)
-            name.text = "Title: "+restaurant.name
-            address.text = restaurant.address
-            phone.text = "Phone number : "+restaurant.phone
-            d("danial","here we are")
+            name.text = restaurant.name
+            address.text ="Address: "+restaurant.address
+            phone.text = "Phone number :"+restaurant.phone
         }
     }
 }
 
+interface ClickListener{
+    fun clickedItem(restaurant: Restaurant)
+}

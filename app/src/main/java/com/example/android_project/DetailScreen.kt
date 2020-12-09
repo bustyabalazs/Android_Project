@@ -1,10 +1,13 @@
 package com.example.android_project
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -17,43 +20,43 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class DetailScreen : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
+    val args:DetailScreenArgs by navArgs()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setHasOptionsMenu(true)
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detail_screen, container, false)
-    }
+        val view = inflater.inflate(R.layout.fragment_detail_screen, container, false)
+        view.findViewById<TextView>(R.id.name).text="Name: "+args.restaurant.name
+        view.findViewById<TextView>(R.id.address).text="Address: "+args.restaurant.address
+        view.findViewById<TextView>(R.id.city).text="City: "+args.restaurant.city
+        view.findViewById<TextView>(R.id.area).text="Area: "+args.restaurant.area
+        view.findViewById<TextView>(R.id.postal_code).text="Postal code: "+args.restaurant.postal_code
+        view.findViewById<TextView>(R.id.country).text="Country: "+args.restaurant.country
+        view.findViewById<TextView>(R.id.phone).text="Phone: "+args.restaurant.phone
+        view.findViewById<TextView>(R.id.price).text="Price: "+args.restaurant.price
+        view.findViewById<TextView>(R.id.reserve_url).text="Reserve: "+args.restaurant.reserve_url
+        view.findViewById<TextView>(R.id.mobile_reserve_url).text="Mobile reserve: "+args.restaurant.mobile_reserve_url
+        Glide.with( view.findViewById<ImageView>(R.id.restaurant_photo))
+            .load(args.restaurant.image_url)
+            .override(700)
+            .circleCrop()
+            .into(view.findViewById<ImageView>(R.id.restaurant_photo))
+        return view
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment DetailScreen.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            DetailScreen().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    }
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_bar,menu)
+        menu?.findItem(R.id.profile)?.setOnMenuItemClickListener {
+            Navigation.findNavController(this.requireView()).navigate(DetailScreenDirections.actionDetailScreenToProfileScreen())
+            return@setOnMenuItemClickListener true
+        }
+        return super.onCreateOptionsMenu(menu, inflater)
     }
 }

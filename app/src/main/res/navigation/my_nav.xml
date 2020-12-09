@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_mainScreenFragment_to_detailScreen"
             app:destination="@id/detailScreen" />
+        <action
+            android:id="@+id/action_mainScreenFragment_to_profileScreen"
+            app:destination="@id/profileScreen" />
     </fragment>
     <fragment
         android:id="@+id/detailScreen"
@@ -22,5 +25,15 @@
         <action
             android:id="@+id/action_detailScreen_to_mainScreenFragment"
             app:destination="@id/mainScreenFragment" />
+        <argument
+            android:name="restaurant"
+            app:argType="com.example.android_project.Restaurant" />
+        <action
+            android:id="@+id/action_detailScreen_to_profileScreen"
+            app:destination="@id/profileScreen" />
     </fragment>
+    <fragment
+        android:id="@+id/profileScreen"
+        android:name="com.example.android_project.ProfileScreen"
+        android:label="ProfileScreen" />
 </navigation>
