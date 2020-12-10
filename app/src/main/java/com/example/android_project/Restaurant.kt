@@ -1,5 +1,6 @@
 package com.example.android_project
 
+import androidx.room.Entity
 import java.io.Serializable
 
 data class Restaurants(
@@ -8,7 +9,6 @@ data class Restaurants(
         val current_page: Number,
         val restaurants: List<Restaurant>
 )
-
 data class Restaurant (
         val id:Number,
         val name:String,
