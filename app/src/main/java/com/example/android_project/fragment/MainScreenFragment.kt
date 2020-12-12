@@ -1,4 +1,4 @@
-package com.example.android_project
+package com.example.android_project.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,15 +9,15 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import android.util.Log
-import android.util.Log.d
 import android.view.*
 import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.navigation.Navigation
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.android_project.*
+
+//import com.example.android_project.fragment.MainScreenFragmentDirections
 
 class
-MainScreenFragment : Fragment(),ClickListener {
+MainScreenFragment : Fragment(), ClickListener {
 
     var restaurantAdapter: RestaurantAdapter?=null
 
@@ -32,7 +32,9 @@ MainScreenFragment : Fragment(),ClickListener {
         setHasOptionsMenu(true)
         val view: View =inflater.inflate(R.layout.fragment_main_screen, container, false)
 
-        val request = ServiceBuilder.buildService(OpenTableEndPoints::class.java)
+        val request = ServiceBuilder.buildService(
+            OpenTableEndPoints::class.java
+        )
         val call = request.getRestaurants("US")//("https://opentable.herokuapp.com/api/")
 
         call.enqueue(object : Callback<Restaurants> {
@@ -43,7 +45,11 @@ MainScreenFragment : Fragment(),ClickListener {
 
                     view.findViewById<RecyclerView>(R.id.recyclerView).setHasFixedSize(true)
                     view.findViewById<RecyclerView>(R.id.recyclerView).layoutManager = LinearLayoutManager(context)
-                    view.findViewById<RecyclerView>(R.id.recyclerView).adapter = RestaurantAdapter(response.body()!!.restaurants,this@MainScreenFragment)
+                    view.findViewById<RecyclerView>(R.id.recyclerView).adapter =
+                        RestaurantAdapter(
+                            response.body()!!.restaurants,
+                            this@MainScreenFragment
+                        )
                 }
             }
             override fun onFailure(call: Call<Restaurants>, t: Throwable) {
@@ -61,7 +67,11 @@ MainScreenFragment : Fragment(),ClickListener {
 
     override fun clickedItem(restaurant: Restaurant) {
         Log.e("TAG",restaurant.name)
-        (Navigation.findNavController(this.requireView()).navigate(MainScreenFragmentDirections.actionMainScreenFragmentToDetailScreen(restaurant)) )
+        (Navigation.findNavController(this.requireView()).navigate(
+            MainScreenFragmentDirections.actionMainScreenFragmentToDetailScreen(
+                restaurant
+            )
+        ) )
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

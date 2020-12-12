@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainScreenFragment"
-        android:name="com.example.android_project.MainScreenFragment"
+        android:name="com.example.android_project.fragment.MainScreenFragment"
         android:label="fragment_main_screen"
         tools:layout="@layout/fragment_main_screen" >
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailScreen"
-        android:name="com.example.android_project.DetailScreen"
+        android:name="com.example.android_project.fragment.DetailScreen"
         android:label="fragment_detail_screen"
         tools:layout="@layout/fragment_detail_screen" >
         <action
@@ -34,6 +34,6 @@
     </fragment>
     <fragment
         android:id="@+id/profileScreen"
-        android:name="com.example.android_project.ProfileScreen"
+        android:name="com.example.android_project.fragment.ProfileScreen"
         android:label="ProfileScreen" />
 </navigation>

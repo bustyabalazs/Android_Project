@@ -1,4 +1,4 @@
-package com.example.android_project
+package com.example.android_project.fragment
 
 import android.os.Bundle
 import android.view.*
@@ -8,6 +8,12 @@ import android.widget.TextView
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+//import com.example.android_project.DetailScreenArgs
+//import com.example.android_project.DetailScreenDirections
+import com.example.android_project.R
+
+//import com.example.android_project.fragment.DetailScreenArgs
+//import com.example.android_project.fragment.DetailScreenDirections
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,7 +26,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class DetailScreen : Fragment() {
-    val args:DetailScreenArgs by navArgs()
+    val args: DetailScreenArgs by navArgs()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }

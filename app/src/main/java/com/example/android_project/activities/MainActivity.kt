@@ -1,15 +1,13 @@
-package com.example.android_project
+package com.example.android_project.activities
 
-import android.content.ClipData
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import androidx.appcompat.widget.Toolbar
+import android.util.Log.d
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.example.android_project.ProfileDatabase
+import com.example.android_project.ProfileRepository
+import com.example.android_project.R
 
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
@@ -19,7 +17,4 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         navController = (supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment).navController
     }
-
-
-
 }

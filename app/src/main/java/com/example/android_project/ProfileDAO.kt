@@ -1,10 +1,7 @@
 package com.example.android_project
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 
 //data access object
 @Dao
@@ -12,6 +9,15 @@ interface ProfileDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addProfile(profile: Profile)
 
-    @Query("SELECT favoriteRestaurants FROM profile_table")
-    fun readAllRestaurants(): LiveData<Restaurants>//TODO List<Restaurant>?
+    @Update(entity = Profile::class)
+    suspend fun updateProfile(profile: ProfileUpdate)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun addRestaurant(restaurant: RestaurantTable)
+
+    @Query("SELECT * FROM profile_table WHERE id=1")
+    fun readAllData(): LiveData<Profile>//TODO List<Restaurant>?
+
+    @Query("SELECT * FROM restaurants_table")
+    fun readRestaurants(): LiveData<List<RestaurantTable>>//TODO List<Restaurant>?
 }

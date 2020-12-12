@@ -9,14 +9,14 @@
         android:supportsRtl="true"
         android:label="WhereToEat"
         android:theme="@style/Theme.Android_Project">
-        <activity android:name=".SplashScreenActivity">
+        <activity android:name=".activities.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".activities.MainActivity">
         </activity>
     </application>
 
