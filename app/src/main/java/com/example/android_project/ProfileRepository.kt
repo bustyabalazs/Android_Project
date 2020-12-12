@@ -8,7 +8,7 @@ class ProfileRepository(private val profileDAO: ProfileDAO) {
     suspend fun  addProfile(profile: Profile){
         profileDAO.addProfile(profile)
     }
-    suspend fun updateProfile(profile: ProfileUpdate){
+    suspend fun updateProfile(profile: Profile){
         profileDAO.updateProfile(profile)
     }
 

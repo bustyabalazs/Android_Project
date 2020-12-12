@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.android_project.Profile
-import com.example.android_project.ProfileUpdate
 import com.example.android_project.ProfileViewModel
 import com.example.android_project.R
 
@@ -35,7 +34,7 @@ class ProfileScreen : Fragment() {
         return view
     }
     private  fun setProfileView(profile: Profile){
-        view?.findViewById<EditText>(R.id.name)?.setText(profileViewModel.readProfile.value!!.name)
+        view?.findViewById<EditText>(R.id.name)?.setText(profile.name)
         view?.findViewById<EditText>(R.id.email)?.setText(profile.email)
         view?.findViewById<EditText>(R.id.phone_number)?.setText(profile.phone)
         view?.findViewById<EditText>(R.id.address)?.setText(profile.address)
@@ -47,7 +46,7 @@ class ProfileScreen : Fragment() {
         val address=view?.findViewById<EditText>(R.id.address)?.text.toString()
         val email=view?.findViewById<EditText>(R.id.email)?.text.toString()
         val phone=view?.findViewById<EditText>(R.id.phone_number)?.text.toString()
-        val profile=ProfileUpdate(1,name,"picture",address,phone,email)
+        val profile=Profile(1,name,"picture",address,phone,email)
         profileViewModel.updateProfile(profile)
         Toast.makeText(requireContext(),"Profile saved!",Toast.LENGTH_LONG).show()
     }
@@ -59,14 +58,13 @@ class ProfileScreen : Fragment() {
         val email = view?.findViewById<EditText>(R.id.email).toString()
         val picture = "picture"//view?.findViewById<EditText>(R.id.email).toString()
         val profile = Profile(
-            0,
+            1,
             name,
             picture,
             address,
             phone,
             email
         )
-
         profileViewModel.addProfile(profile)
         Toast.makeText(requireContext(),"Profile saved!",Toast.LENGTH_LONG).show()
 

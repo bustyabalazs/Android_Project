@@ -10,7 +10,7 @@ interface ProfileDAO {
     suspend fun addProfile(profile: Profile)
 
     @Update(entity = Profile::class)
-    suspend fun updateProfile(profile: ProfileUpdate)
+    suspend fun updateProfile(profile: Profile)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addRestaurant(restaurant: RestaurantTable)

@@ -26,7 +26,7 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
             repository.addProfile(profile)
         }
     }
-    fun updateProfile(profile: ProfileUpdate){
+    fun updateProfile(profile: Profile){
         viewModelScope.launch (Dispatchers.IO) {
             repository.updateProfile(profile)
         }

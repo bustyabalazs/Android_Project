@@ -13,17 +13,4 @@ data class Profile (
     val address: String,
     val phone: String,
     val email:String
-   // val favoriteRestaurants:Restaurants?
-)
-
-@Entity
-class ProfileUpdate (
-    @PrimaryKey(autoGenerate = false)
-    @ColumnInfo() val id:Int,
-    val name:String,
-    val picture: String,
-    val address: String,
-    val phone: String,
-    val email:String
-    // val favoriteRestaurants:Restaurants?
 )

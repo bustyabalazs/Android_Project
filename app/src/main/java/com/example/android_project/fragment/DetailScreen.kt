@@ -1,7 +1,10 @@
 package com.example.android_project.fragment
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import android.widget.ImageView
 import android.widget.TextView
@@ -54,6 +57,13 @@ class DetailScreen : Fragment() {
             .override(700)
             .circleCrop()
             .into(view.findViewById<ImageView>(R.id.restaurant_photo))
+        val map=view.findViewById<Button>(R.id.map)
+        map.setOnClickListener{
+            val intent= Intent(android.content.Intent.ACTION_VIEW)
+            intent.data = Uri.parse("http://maps.google.com/maps?q=loc:${args.restaurant.lat},${args.restaurant.lng}")
+            intent.setPackage("com.google.android.apps.maps");
+            startActivity(intent)
+        }
         return view
 
     }
