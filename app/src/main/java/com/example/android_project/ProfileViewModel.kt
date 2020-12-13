@@ -14,16 +14,20 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
     private val repository: ProfileRepository
 
     init {
-
         val profileDAO = ProfileDatabase.getDatabase(application).profileDao()
         repository = ProfileRepository(profileDAO)
         readProfile = repository.readProfile
     }
 
     fun addProfile(profile: Profile) {
-
         viewModelScope.launch(Dispatchers.IO) {
             repository.addProfile(profile)
+        }
+    }
+
+    fun addRestaurant(restaurant: RestaurantTable) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.addRestaurant(restaurant)
         }
     }
     fun updateProfile(profile: Profile){

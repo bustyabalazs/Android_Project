@@ -1,6 +1,7 @@
 package com.example.android_project
 
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.io.Serializable
 
 data class Restaurants(

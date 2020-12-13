@@ -51,22 +51,4 @@ class ProfileScreen : Fragment() {
         Toast.makeText(requireContext(),"Profile saved!",Toast.LENGTH_LONG).show()
     }
 
-    private fun insertDataToDatabase() {
-        val name = view?.findViewById<EditText>(R.id.name).toString()
-        val address = view?.findViewById<EditText>(R.id.address).toString()
-        val phone = view?.findViewById<EditText>(R.id.phone).toString()
-        val email = view?.findViewById<EditText>(R.id.email).toString()
-        val picture = "picture"//view?.findViewById<EditText>(R.id.email).toString()
-        val profile = Profile(
-            1,
-            name,
-            picture,
-            address,
-            phone,
-            email
-        )
-        profileViewModel.addProfile(profile)
-        Toast.makeText(requireContext(),"Profile saved!",Toast.LENGTH_LONG).show()
-
-    }
 }
