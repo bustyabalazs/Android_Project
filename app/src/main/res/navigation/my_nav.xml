@@ -35,5 +35,9 @@
     <fragment
         android:id="@+id/profileScreen"
         android:name="com.example.android_project.fragment.ProfileScreen"
-        android:label="ProfileScreen" />
+        android:label="ProfileScreen" >
+        <action
+            android:id="@+id/action_profileScreen_to_detailScreen3"
+            app:destination="@id/detailScreen" />
+    </fragment>
 </navigation>

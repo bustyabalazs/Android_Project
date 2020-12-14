@@ -11,12 +11,14 @@ import kotlinx.coroutines.launch
 
 class ProfileViewModel(application: Application) : AndroidViewModel(application) {
     val readProfile: LiveData<Profile>
+    val readRestaurants: LiveData<List<RestaurantTable>>
     private val repository: ProfileRepository
 
     init {
         val profileDAO = ProfileDatabase.getDatabase(application).profileDao()
         repository = ProfileRepository(profileDAO)
         readProfile = repository.readProfile
+        readRestaurants=repository.readRestaurants
     }
 
     fun addProfile(profile: Profile) {
@@ -30,9 +32,14 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
             repository.addRestaurant(restaurant)
         }
     }
-    fun updateProfile(profile: Profile){
-        viewModelScope.launch (Dispatchers.IO) {
+    fun updateProfile(profile: Profile) {
+        viewModelScope.launch(Dispatchers.IO) {
             repository.updateProfile(profile)
+        }
+    }
+    fun deleteRestaurant(restaurant: RestaurantTable) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteRestaurant(restaurant)
         }
     }
 }

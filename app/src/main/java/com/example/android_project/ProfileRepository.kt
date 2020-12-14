@@ -15,6 +15,7 @@ class ProfileRepository(private val profileDAO: ProfileDAO) {
     suspend fun updateProfile(profile: Profile){
         profileDAO.updateProfile(profile)
     }
-    suspend fun readRestaurants
-
+    suspend fun deleteRestaurant(restaurant: RestaurantTable){
+        profileDAO.deleteRestaurant(restaurant)
+    }
 }

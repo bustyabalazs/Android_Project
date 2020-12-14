@@ -20,4 +20,7 @@ interface ProfileDAO {
 
     @Query("SELECT * FROM restaurants_table")
     fun readRestaurants(): LiveData<List<RestaurantTable>>//TODO List<Restaurant>?
+
+    @Delete(entity = RestaurantTable::class)
+    fun deleteRestaurant(restaurant: RestaurantTable)//TODO List<Restaurant>?
 }

@@ -1,16 +1,13 @@
 package com.example.android_project
 
-import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import retrofit2.Callback
+import com.example.android_project.fragment.MainScreenFragment
 
 
 class RestaurantAdapter(var restaurants: List<Restaurant>, var clickListener: ClickListener): RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder>() {

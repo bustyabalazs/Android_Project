@@ -8,7 +8,6 @@ import android.widget.Toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import android.util.Log
 import android.view.*
 import android.widget.ProgressBar
 import androidx.navigation.Navigation
@@ -66,12 +65,11 @@ MainScreenFragment : Fragment(), ClickListener {
     }
 
     override fun clickedItem(restaurant: Restaurant) {
-        Log.e("TAG",restaurant.name)
-        (Navigation.findNavController(this.requireView()).navigate(
+        Navigation.findNavController(this.requireView()).navigate(
             MainScreenFragmentDirections.actionMainScreenFragmentToDetailScreen(
                 restaurant
             )
-        ) )
+        )
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

@@ -4,14 +4,20 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
-import com.example.android_project.*
+import com.example.android_project.ProfileViewModel
+import com.example.android_project.R
+import com.example.android_project.Restaurant
+import com.example.android_project.RestaurantTable
 
 //import com.example.android_project.DetailScreenArgs
 //import com.example.android_project.DetailScreenDirections
@@ -29,7 +35,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [DetailScreen.newInstance] factory method to
  * create an instance of this fragment.
  */
-class DetailScreen : Fragment() {
+class DetailScreen : Fragment(){
     val args: DetailScreenArgs by navArgs()
     private lateinit var profileViewModel: ProfileViewModel
 
@@ -43,6 +49,8 @@ class DetailScreen : Fragment() {
     ): View? {
         setHasOptionsMenu(true)
         // Inflate the layout for this fragment
+        profileViewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
+        val restaurants = profileViewModel.readRestaurants
         val view = inflater.inflate(R.layout.fragment_detail_screen, container, false)
         view.findViewById<TextView>(R.id.name).text = "Name: " + args.restaurant.name
         view.findViewById<TextView>(R.id.address).text = "Address: " + args.restaurant.address
@@ -51,7 +59,6 @@ class DetailScreen : Fragment() {
         view.findViewById<TextView>(R.id.postal_code).text =
             "Postal code: " + args.restaurant.postal_code
         view.findViewById<TextView>(R.id.country).text = "Country: " + args.restaurant.country
-        view.findViewById<TextView>(R.id.phone).text = "Phone: " + args.restaurant.phone
         view.findViewById<TextView>(R.id.price).text = "Price: " + args.restaurant.price
         view.findViewById<TextView>(R.id.reserve_url).text =
             "Reserve: " + args.restaurant.reserve_url
@@ -62,9 +69,14 @@ class DetailScreen : Fragment() {
             .override(700)
             .circleCrop()
             .into(view.findViewById<ImageView>(R.id.restaurant_photo))
-        profileViewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
-        profileViewModel.re
-        val insert = true//TODO logic
+
+        var isFavourite=true
+        restaurants.observe(viewLifecycleOwner) {
+            isFavourite = it.contains(restaurantTableAdapter(args.restaurant))
+            view.findViewById<Button>(R.id.favourite).text = if (isFavourite) "REMOVE FROM FAVOURITES" else "ADD TO FAVOURITES"
+        }
+        //view.findViewById<Button>(R.id.favourite).text = if (isFavourite) "REMOVE FROM FAVOURITES" else "ADD TO FAVOURITES"
+
         //Mapview
         val map = view.findViewById<Button>(R.id.map)
         map.setOnClickListener {
@@ -74,18 +86,26 @@ class DetailScreen : Fragment() {
             intent.setPackage("com.google.android.apps.maps");
             startActivity(intent)
         }
+
+        //CALL
+        val call = view.findViewById<Button>(R.id.call)
+        call.setOnClickListener {
+            val intent =
+                Intent(Intent.ACTION_DIAL, Uri.parse("tel:${args.restaurant.phone}"))
+            startActivity(intent)
+        }
         //ADD favourite restaurant
         profileViewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
         val insertOrDeleteRestaurant = view.findViewById<Button>(R.id.favourite)
         insertOrDeleteRestaurant.setOnClickListener {
-            if (insert) {
-                insertFavouriteRestaurant(args.restaurant)
-            } else {
+            if (isFavourite) {
                 deleteFavouriteRestaurant(args.restaurant)
+            } else {
+                insertFavouriteRestaurant(args.restaurant)
             }
         }
-        return view
 
+        return view
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -104,8 +124,8 @@ class DetailScreen : Fragment() {
     }
 
     private fun deleteFavouriteRestaurant(restaurant: Restaurant) {
-        profileViewModel.addRestaurant(restaurantTableAdapter(args.restaurant))
-        Toast.makeText(requireContext(), "Added to favourites!", Toast.LENGTH_LONG).show()
+        profileViewModel.deleteRestaurant(restaurantTableAdapter(args.restaurant))
+        Toast.makeText(requireContext(), "Removed from favourites!", Toast.LENGTH_LONG).show()
     }
 
     private fun restaurantTableAdapter(restaurant: Restaurant): RestaurantTable {
