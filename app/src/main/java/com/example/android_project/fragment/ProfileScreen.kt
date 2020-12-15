@@ -32,14 +32,24 @@ class ProfileScreen : Fragment(),ClickListener {
         view.findViewById<Button>(R.id.save).setOnClickListener {
             updateProfile()
         }
-        val restaurants=profileViewModel.readRestaurants
+
         //recycler view
-        view.findViewById<RecyclerView>(R.id.recyclerView).setHasFixedSize(true)
-        view.findViewById<RecyclerView>(R.id.recyclerView).layoutManager = LinearLayoutManager(context)
-        view.findViewById<RecyclerView>(R.id.recyclerView).adapter =
-            RestaurantAdapter(restaurantListAdapter(restaurants.value),this@ProfileScreen)
+        profileViewModel.readRestaurants.observe(viewLifecycleOwner, Observer { restaurants -> recyclerView(restaurants) })
+
         return view
     }
+    private fun addPicture(){
+
+    }
+
+    private fun recyclerView(restaurantList: List<RestaurantTable>){
+        val restaurants=restaurantListAdapter(restaurantList)
+        view?.findViewById<RecyclerView>(R.id.recyclerView)?.setHasFixedSize(true)
+        view?.findViewById<RecyclerView>(R.id.recyclerView)?.layoutManager = LinearLayoutManager(context)
+        view?.findViewById<RecyclerView>(R.id.recyclerView)?.adapter = RestaurantAdapter(restaurants,this@ProfileScreen)
+
+    }
+
     private  fun setProfileView(profile: Profile){
         view?.findViewById<EditText>(R.id.name)?.setText(profile.name)
         view?.findViewById<EditText>(R.id.email)?.setText(profile.email)
@@ -73,7 +83,8 @@ class ProfileScreen : Fragment(),ClickListener {
             restaurant.price,
             restaurant.reserve_url,
             restaurant.mobile_reserve_url,
-            restaurant.image_url
+            restaurant.image_url,
+            true
         )
     }
     private fun restaurantListAdapter(restaurants: List<RestaurantTable>?):List<Restaurant>{
@@ -91,6 +102,34 @@ class ProfileScreen : Fragment(),ClickListener {
             ProfileScreenDirections.actionProfileScreenToDetailScreen3(
                 restaurant
             )
+        )
+    }
+    override fun clickedFavourite(restaurant: Restaurant) {
+        if(restaurant.isFavourite) {
+            profileViewModel.deleteRestaurant(restaurantTableAdapter(restaurant))
+        }
+        else{
+            profileViewModel.addRestaurant(restaurantTableAdapter(restaurant))
+        }
+    }
+
+    private fun restaurantTableAdapter(restaurant: Restaurant): RestaurantTable {
+        return RestaurantTable(
+            restaurant.id.toInt(),
+            restaurant.name,
+            restaurant.address,
+            restaurant.city,
+            restaurant.state,
+            restaurant.area,
+            restaurant.postal_code,
+            restaurant.country,
+            restaurant.phone,
+            restaurant.lat.toFloat(),
+            restaurant.lng.toFloat(),
+            restaurant.price.toFloat(),
+            restaurant.reserve_url,
+            restaurant.mobile_reserve_url,
+            restaurant.image_url
         )
     }
 }

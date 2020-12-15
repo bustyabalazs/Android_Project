@@ -19,22 +19,6 @@ import com.example.android_project.R
 import com.example.android_project.Restaurant
 import com.example.android_project.RestaurantTable
 
-//import com.example.android_project.DetailScreenArgs
-//import com.example.android_project.DetailScreenDirections
-
-//import com.example.android_project.fragment.DetailScreenArgs
-//import com.example.android_project.fragment.DetailScreenDirections
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [DetailScreen.newInstance] factory method to
- * create an instance of this fragment.
- */
 class DetailScreen : Fragment(){
     val args: DetailScreenArgs by navArgs()
     private lateinit var profileViewModel: ProfileViewModel

@@ -16,11 +16,11 @@ interface ProfileDAO {
     suspend fun addRestaurant(restaurant: RestaurantTable)
 
     @Query("SELECT * FROM profile_table WHERE id=1")
-    fun readAllData(): LiveData<Profile>//TODO List<Restaurant>?
+    fun readAllData(): LiveData<Profile>
 
     @Query("SELECT * FROM restaurants_table")
-    fun readRestaurants(): LiveData<List<RestaurantTable>>//TODO List<Restaurant>?
+    fun readRestaurants(): LiveData<List<RestaurantTable>>
 
     @Delete(entity = RestaurantTable::class)
-    fun deleteRestaurant(restaurant: RestaurantTable)//TODO List<Restaurant>?
+    suspend fun deleteRestaurant(restaurant: RestaurantTable)
 }
