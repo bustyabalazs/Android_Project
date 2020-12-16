@@ -1,18 +1,20 @@
 package com.example.android_project.fragment
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.*
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.android_project.*
 
 class ProfileScreen : Fragment(),ClickListener {
@@ -35,11 +37,29 @@ class ProfileScreen : Fragment(),ClickListener {
 
         //recycler view
         profileViewModel.readRestaurants.observe(viewLifecycleOwner, Observer { restaurants -> recyclerView(restaurants) })
-
+        val gallery=view.findViewById<ImageButton>(R.id.picture)
+        gallery.setOnClickListener{
+            openGallery()
+        }
         return view
     }
-    private fun addPicture(){
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK && requestCode == 1000) {//IMAGE_PICK_CODE
+            Glide.with(requireView().findViewById<ImageView>(R.id.profile_picture))
+                .load(data?.data)
+                .override(600)
+                .circleCrop()
+                .into(requireView().findViewById<ImageView>(R.id.profile_picture))
+
+            view?.findViewById<ImageView>(R.id.profile_picture)?.setImageURI(data?.data)
+            profileViewModel.profilePicture=data?.data
+        }
+    }
+    private fun openGallery(){
+        val intent=Intent(Intent.ACTION_PICK)
+        intent.type="image/*"
+        startActivityForResult(intent,1000)
     }
 
     private fun recyclerView(restaurantList: List<RestaurantTable>){
@@ -55,7 +75,11 @@ class ProfileScreen : Fragment(),ClickListener {
         view?.findViewById<EditText>(R.id.email)?.setText(profile.email)
         view?.findViewById<EditText>(R.id.phone_number)?.setText(profile.phone)
         view?.findViewById<EditText>(R.id.address)?.setText(profile.address)
-        //view?.findViewById<EditText>(R.id.profile_picture)?.setText(profile.picture)
+        Glide.with(requireView().findViewById<ImageView>(R.id.profile_picture))
+            .load(profile.picture.toUri())
+            .override(600)
+            .circleCrop()
+            .into(requireView().findViewById<ImageView>(R.id.profile_picture))
     }
 
     private fun updateProfile(){
@@ -63,7 +87,8 @@ class ProfileScreen : Fragment(),ClickListener {
         val address=view?.findViewById<EditText>(R.id.address)?.text.toString()
         val email=view?.findViewById<EditText>(R.id.email)?.text.toString()
         val phone=view?.findViewById<EditText>(R.id.phone_number)?.text.toString()
-        val profile=Profile(1,name,"picture",address,phone,email)
+        val picture=profileViewModel.profilePicture
+        val profile=Profile(1,name,picture.toString(),address,phone,email)
         profileViewModel.updateProfile(profile)
         Toast.makeText(requireContext(),"Profile saved!",Toast.LENGTH_LONG).show()
     }

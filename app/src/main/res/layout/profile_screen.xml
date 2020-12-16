@@ -20,14 +20,14 @@
             android:id="@+id/picture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
+            android:layout_gravity="center"
             app:srcCompat="@android:drawable/ic_menu_gallery" />
         <ImageView
             android:id="@+id/profile_picture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="Profile picture"
-            android:gravity="center"
+            android:gravity="top"
             android:orientation="horizontal" />
 
         <EditText
@@ -35,6 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Name"
+            android:hint="Name"
             android:autofillHints="Name" />
 
         <EditText
@@ -42,6 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Address"
+            android:hint="Address"
             android:autofillHints="Address"
             />
 
@@ -51,6 +53,7 @@
             android:layout_height="wrap_content"
             android:autofillHints="Phone number"
             android:text="Phone number"
+            android:hint="Phone number"
             android:inputType="phone"
            />
 
@@ -60,6 +63,7 @@
             android:layout_height="wrap_content"
             android:autofillHints="Email"
             android:text="Email"
+            android:hint="Email"
             android:inputType="textEmailAddress"
             />
         <Button

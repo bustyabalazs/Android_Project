@@ -53,16 +53,17 @@ MainScreenFragment : Fragment(), ClickListener {
                         for (restaurant in response!!.body()!!.restaurants) {
                             restaurant.isFavourite = it.contains(restaurantTableAdapter(restaurant))
                         }
+                        view.findViewById<ProgressBar>(R.id.progress_bar).visibility = View.GONE
+                        view.findViewById<RecyclerView>(R.id.recyclerView).setHasFixedSize(true)
+                        view.findViewById<RecyclerView>(R.id.recyclerView).layoutManager =
+                            LinearLayoutManager(context)
+                        view.findViewById<RecyclerView>(R.id.recyclerView).adapter =
+                            RestaurantAdapter(
+                                response.body()!!.restaurants,
+                                this@MainScreenFragment
+                            )
                     }
-                    view.findViewById<ProgressBar>(R.id.progress_bar).visibility = View.GONE
-                    view.findViewById<RecyclerView>(R.id.recyclerView).setHasFixedSize(true)
-                    view.findViewById<RecyclerView>(R.id.recyclerView).layoutManager =
-                        LinearLayoutManager(context)
-                    view.findViewById<RecyclerView>(R.id.recyclerView).adapter =
-                        RestaurantAdapter(
-                            response.body()!!.restaurants,
-                            this@MainScreenFragment
-                        )
+
                 }
             }
 

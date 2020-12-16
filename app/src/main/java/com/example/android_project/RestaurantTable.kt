@@ -22,3 +22,11 @@ data class RestaurantTable (
     val mobile_reserve_url:String,
     val image_url:String
 )
+
+@Entity(tableName = "restaurants_images")
+data class RestaurantImages (
+    @PrimaryKey(autoGenerate = true)
+    val id:Int,
+    val restaurant_id:Int,
+    val image_url:String
+)
