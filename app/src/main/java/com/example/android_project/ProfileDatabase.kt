@@ -9,7 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [Profile::class, RestaurantTable::class], version = 1, exportSchema = false)
+@Database(entities = [Profile::class, RestaurantTable::class, RestaurantImages::class], version = 1, exportSchema = false)
 abstract class ProfileDatabase : RoomDatabase() {
     abstract fun profileDao(): ProfileDAO
 

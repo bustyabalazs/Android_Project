@@ -45,32 +45,5 @@ class RestaurantImageAdapter(var restaurantImages: List<RestaurantImages>) :
     }
 }
 
-private fun setFavouriteButton(isFavourite: Boolean, favouriteButton: ImageButton) {
-    if (isFavourite) {
-        favouriteButton.setImageResource(android.R.drawable.btn_star_big_on)
-    } else {
-        favouriteButton.setImageResource(android.R.drawable.btn_star_big_off)
-    }
-}
-
-private fun restaurantTableAdapter(restaurant: Restaurant): RestaurantTable {
-    return RestaurantTable(
-        restaurant.id.toInt(),
-        restaurant.name,
-        restaurant.address,
-        restaurant.city,
-        restaurant.state,
-        restaurant.area,
-        restaurant.postal_code,
-        restaurant.country,
-        restaurant.phone,
-        restaurant.lat.toFloat(),
-        restaurant.lng.toFloat(),
-        restaurant.price.toFloat(),
-        restaurant.reserve_url,
-        restaurant.mobile_reserve_url,
-        restaurant.image_url
-    )
-}
 
 

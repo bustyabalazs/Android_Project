@@ -23,7 +23,7 @@ data class RestaurantTable (
     val image_url:String
 )
 
-@Entity(tableName = "restaurants_images")
+@Entity(tableName = "restaurant_images")
 data class RestaurantImages (
     @PrimaryKey(autoGenerate = true)
     val id:Int,
