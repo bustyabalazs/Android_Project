@@ -34,10 +34,9 @@ abstract class ProfileDatabase : RoomDatabase() {
                     ProfileDatabase::class.java,
                     "profile_database"
                 ).build()
-               // d("fg","dfgh")
                 GlobalScope.launch(Dispatchers.IO) { instance.profileDao().addProfile(Profile(1,"name","picture","address","phone number","email"))}
                 Instance = instance
-                return instance//TODO debug here
+                return instance
             }
         }
     }

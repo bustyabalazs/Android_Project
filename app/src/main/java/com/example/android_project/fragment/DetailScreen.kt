@@ -1,25 +1,24 @@
 package com.example.android_project.fragment
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.OrientationHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.android_project.ProfileViewModel
-import com.example.android_project.R
-import com.example.android_project.Restaurant
-import com.example.android_project.RestaurantTable
+import com.example.android_project.*
 
-class DetailScreen : Fragment(){
+class DetailScreen : Fragment(),ClickListener{
     val args: DetailScreenArgs by navArgs()
     private lateinit var profileViewModel: ProfileViewModel
 
@@ -34,7 +33,9 @@ class DetailScreen : Fragment(){
         setHasOptionsMenu(true)
         // Inflate the layout for this fragment
         profileViewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
-        val restaurants = profileViewModel.readRestaurants
+
+        profileViewModel.repository.profileDAO.readImages(args.restaurant.id.toInt()).observe(viewLifecycleOwner, Observer { images -> recyclerView(images) })
+
         val view = inflater.inflate(R.layout.fragment_detail_screen, container, false)
         view.findViewById<TextView>(R.id.name).text = "Name: " + args.restaurant.name
         view.findViewById<TextView>(R.id.address).text = "Address: " + args.restaurant.address
@@ -48,18 +49,18 @@ class DetailScreen : Fragment(){
             "Reserve: " + args.restaurant.reserve_url
         view.findViewById<TextView>(R.id.mobile_reserve_url).text =
             "Mobile reserve: " + args.restaurant.mobile_reserve_url
-        Glide.with(view.findViewById<ImageView>(R.id.restaurant_photo))
-            .load(args.restaurant.image_url)
-            .override(700)
-            .circleCrop()
-            .into(view.findViewById<ImageView>(R.id.restaurant_photo))
-
+//        Glide.with(view.findViewById<ImageView>(R.id.restaurant_photo))
+//            .load(args.restaurant.image_url)
+//            .override(700)
+//            .circleCrop()
+//            .into(view.findViewById<ImageView>(R.id.restaurant_photo))
+        val restaurants = profileViewModel.readRestaurants
         var isFavourite=true
         restaurants.observe(viewLifecycleOwner) {
             isFavourite = it.contains(restaurantTableAdapter(args.restaurant))
             view.findViewById<Button>(R.id.favourite).text = if (isFavourite) "REMOVE FROM FAVOURITES" else "ADD TO FAVOURITES"
         }
-        //view.findViewById<Button>(R.id.favourite).text = if (isFavourite) "REMOVE FROM FAVOURITES" else "ADD TO FAVOURITES"
+
 
         //Mapview
         val map = view.findViewById<Button>(R.id.map)
@@ -79,7 +80,6 @@ class DetailScreen : Fragment(){
             startActivity(intent)
         }
         //ADD favourite restaurant
-        profileViewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
         val insertOrDeleteRestaurant = view.findViewById<Button>(R.id.favourite)
         insertOrDeleteRestaurant.setOnClickListener {
             if (isFavourite) {
@@ -89,7 +89,20 @@ class DetailScreen : Fragment(){
             }
         }
 
+        //ADD image
+        val add = view.findViewById<ImageButton>(R.id.add_picture)
+        add.setOnClickListener {
+            openGallery()
+        }
+
+
         return view
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK && requestCode == 1000) {//IMAGE_PICK_CODE
+            updateImages(data?.data)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -108,7 +121,7 @@ class DetailScreen : Fragment(){
     }
 
     private fun deleteFavouriteRestaurant(restaurant: Restaurant) {
-        profileViewModel.deleteRestaurant(restaurantTableAdapter(args.restaurant))
+        profileViewModel.deleteRestaurant(restaurantTableAdapter(restaurant))
         Toast.makeText(requireContext(), "Removed from favourites!", Toast.LENGTH_LONG).show()
     }
 
@@ -132,4 +145,38 @@ class DetailScreen : Fragment(){
         )
     }
 
+    private fun recyclerView(restaurantImages: List<RestaurantImages>){
+        val last=RestaurantImages(0,args.restaurant.id.toInt(),args.restaurant.image_url)
+        restaurantImages.reversed()
+        val fullList=restaurantImages.reversed()+last       //reversed the list => the newer will appear in the front, and add image from the api
+        view?.findViewById<RecyclerView>(R.id.recyclerViewImages)?.setHasFixedSize(true)
+        val layoutManager=LinearLayoutManager(context)
+        layoutManager.orientation=LinearLayoutManager.HORIZONTAL
+        view?.findViewById<RecyclerView>(R.id.recyclerViewImages)?.layoutManager = layoutManager
+        val adapter=RestaurantImageAdapter(fullList,this@DetailScreen)
+        view?.findViewById<RecyclerView>(R.id.recyclerViewImages)?.adapter = adapter
+    }
+
+    private fun openGallery(){
+        val intent=Intent(Intent.ACTION_PICK)
+        intent.type="image/*"
+        startActivityForResult(intent,1000)
+    }
+    private fun updateImages(uri:Uri?){
+       val image=RestaurantImages(0,args.restaurant.id.toInt(),uri.toString())
+        profileViewModel.addImage(image)
+        Toast.makeText(requireContext(),"Image added!",Toast.LENGTH_LONG).show()
+    }
+
+    override fun clickedFavourite(restaurant: Restaurant) {
+
+    }
+
+    override fun clickedItem(restaurant: Restaurant) {
+
+    }
+
+    override fun clickedToDelete(restaurantImages: RestaurantImages) {
+        profileViewModel.deleteImage(restaurantImages)
+    }
 }

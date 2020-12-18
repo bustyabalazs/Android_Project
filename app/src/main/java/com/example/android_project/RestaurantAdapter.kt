@@ -39,7 +39,7 @@ class RestaurantAdapter(var restaurants: List<Restaurant>, var clickListener: Cl
         private val name:TextView = itemView.findViewById(R.id.name)
         private val address:TextView = itemView.findViewById(R.id.address)
         private val phone:TextView = itemView.findViewById(R.id.phone)
-        val favouriteButton:AppCompatImageButton=itemView.findViewById(R.id.fav)
+        private val favouriteButton:AppCompatImageButton=itemView.findViewById(R.id.fav)
 
         fun bind(restaurant: Restaurant) {
             Glide.with(itemView.context).load(restaurant.image_url).into(photo)
@@ -88,4 +88,5 @@ private fun restaurantTableAdapter(restaurant: Restaurant): RestaurantTable {
 interface ClickListener{
     fun clickedItem(restaurant: Restaurant)
     fun clickedFavourite(restaurant: Restaurant)
+    fun clickedToDelete(restaurantImages: RestaurantImages)
 }

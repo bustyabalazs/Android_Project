@@ -138,6 +138,9 @@ class ProfileScreen : Fragment(),ClickListener {
         }
     }
 
+    override fun clickedToDelete(restaurantImages: RestaurantImages) {
+    }
+
     private fun restaurantTableAdapter(restaurant: Restaurant): RestaurantTable {
         return RestaurantTable(
             restaurant.id.toInt(),

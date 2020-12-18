@@ -126,4 +126,8 @@ MainScreenFragment : Fragment(), ClickListener {
 
         )
     }
+
+    override fun clickedToDelete(restaurantImages: RestaurantImages) {
+
+    }
 }

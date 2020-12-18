@@ -14,7 +14,8 @@ import java.net.URI
 class ProfileViewModel(application: Application) : AndroidViewModel(application) {
     val readProfile: LiveData<Profile>
     val readRestaurants: LiveData<List<RestaurantTable>>
-    private val repository: ProfileRepository
+    //val readImages:LiveData<List<RestaurantImages>>
+    val repository: ProfileRepository
     var profilePicture: Uri? = null
 
     init {
@@ -22,6 +23,7 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
         repository = ProfileRepository(profileDAO)
         readProfile = repository.readProfile
         readRestaurants=repository.readRestaurants
+       // readImages=repository.readImages
     }
 
     fun addProfile(profile: Profile) {
@@ -40,9 +42,19 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
             repository.updateProfile(profile)
         }
     }
+    fun addImage(images: RestaurantImages) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.addImage(images)
+        }
+    }
     fun deleteRestaurant(restaurant: RestaurantTable) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteRestaurant(restaurant)
+        }
+    }
+    fun deleteImage(restaurantImage: RestaurantImages) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteImage(restaurantImage)
         }
     }
 }
