@@ -14,7 +14,6 @@ import java.net.URI
 class ProfileViewModel(application: Application) : AndroidViewModel(application) {
     val readProfile: LiveData<Profile>
     val readRestaurants: LiveData<List<RestaurantTable>>
-    //val readImages:LiveData<List<RestaurantImages>>
     val repository: ProfileRepository
     var profilePicture: Uri? = null
 
@@ -23,7 +22,6 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
         repository = ProfileRepository(profileDAO)
         readProfile = repository.readProfile
         readRestaurants=repository.readRestaurants
-       // readImages=repository.readImages
     }
 
     fun addProfile(profile: Profile) {

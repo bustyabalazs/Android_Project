@@ -9,6 +9,6 @@ interface OpenTableEndPoints {
     @GET("restaurants")
     //fun getRestaurants(@Query("restaurants") key: String): Call<Restaurants>
   //  d("danial","here we are")
-    fun getRestaurants(@Query("country") country :String): Call<Restaurants>
+    fun getRestaurants(@Query("country") country :String,@Query("page") page :Int=1): Call<Restaurants>
 
 }

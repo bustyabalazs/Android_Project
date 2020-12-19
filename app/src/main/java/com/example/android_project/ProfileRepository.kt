@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 class ProfileRepository(val profileDAO: ProfileDAO,private val id:Int=0) {
     val readProfile:LiveData<Profile> = profileDAO.readAllData()
     val readRestaurants:LiveData<List<RestaurantTable>> =profileDAO.readRestaurants()
-   // val readImages:LiveData<List<RestaurantImages>> = profileDAO.readImages(id)
 
     suspend fun  addProfile(profile: Profile){
         profileDAO.addProfile(profile)

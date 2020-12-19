@@ -49,11 +49,6 @@ class DetailScreen : Fragment(),ClickListener{
             "Reserve: " + args.restaurant.reserve_url
         view.findViewById<TextView>(R.id.mobile_reserve_url).text =
             "Mobile reserve: " + args.restaurant.mobile_reserve_url
-//        Glide.with(view.findViewById<ImageView>(R.id.restaurant_photo))
-//            .load(args.restaurant.image_url)
-//            .override(700)
-//            .circleCrop()
-//            .into(view.findViewById<ImageView>(R.id.restaurant_photo))
         val restaurants = profileViewModel.readRestaurants
         var isFavourite=true
         restaurants.observe(viewLifecycleOwner) {
