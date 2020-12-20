@@ -22,10 +22,6 @@ class DetailScreen : Fragment(),ClickListener{
     val args: DetailScreenArgs by navArgs()
     private lateinit var profileViewModel: ProfileViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -55,7 +51,6 @@ class DetailScreen : Fragment(),ClickListener{
             isFavourite = it.contains(restaurantTableAdapter(args.restaurant))
             view.findViewById<Button>(R.id.favourite).text = if (isFavourite) "REMOVE FROM FAVOURITES" else "ADD TO FAVOURITES"
         }
-
 
         //Mapview
         val map = view.findViewById<Button>(R.id.map)
@@ -89,7 +84,6 @@ class DetailScreen : Fragment(),ClickListener{
         add.setOnClickListener {
             openGallery()
         }
-
 
         return view
     }
@@ -164,11 +158,9 @@ class DetailScreen : Fragment(),ClickListener{
     }
 
     override fun clickedFavourite(restaurant: Restaurant) {
-
     }
 
     override fun clickedItem(restaurant: Restaurant) {
-
     }
 
     override fun clickedToDelete(restaurantImages: RestaurantImages) {

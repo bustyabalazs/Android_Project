@@ -3,10 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 <item android:title="PROFILE"
 android:id="@+id/profile"
-    app:showAsAction="ifRoom"
+    app:showAsAction="always"
     />
     <item android:title="SEARCH"
         android:id="@+id/search"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
         />
+    <item
+        android:id="@+id/filter"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:title="FILTER"
+        app:showAsAction="always"
+        app:actionViewClass="android.widget.Spinner" />
+       // app:actionViewClass="androidx.appcompat.widget.ActionMenuView"
+
 </menu>

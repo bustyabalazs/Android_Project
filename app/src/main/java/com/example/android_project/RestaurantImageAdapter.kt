@@ -46,7 +46,6 @@ class RestaurantImageAdapter(var restaurantImages: List<RestaurantImages>, var c
             delete.setOnClickListener {
                 clickListener.clickedToDelete(restaurantImage)
             }
-
         }
     }
 }

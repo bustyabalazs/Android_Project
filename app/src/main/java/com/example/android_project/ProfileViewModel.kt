@@ -24,12 +24,6 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
         readRestaurants=repository.readRestaurants
     }
 
-    fun addProfile(profile: Profile) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.addProfile(profile)
-        }
-    }
-
     fun addRestaurant(restaurant: RestaurantTable) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.addRestaurant(restaurant)

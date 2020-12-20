@@ -19,9 +19,6 @@ import com.example.android_project.*
 
 class ProfileScreen : Fragment(),ClickListener {
     private lateinit var profileViewModel: ProfileViewModel
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -79,7 +76,7 @@ class ProfileScreen : Fragment(),ClickListener {
             .load(profile.picture.toUri())
             .override(600)
             .circleCrop()
-            .into(requireView().findViewById<ImageView>(R.id.profile_picture))
+            .into(requireView().findViewById(R.id.profile_picture))
     }
 
     private fun updateProfile(){

@@ -1,24 +1,17 @@
 package com.example.android_project
 
-import android.content.Context
-import android.icu.lang.UCharacter.GraphemeClusterBreak.L
-import android.util.Log
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.widget.AppCompatImageButton
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-//import com.example.android_project.fragment.clickedItem
 
 class RestaurantAdapter(var restaurants: List<Restaurant>, var clickListener: ClickListener) :
-    RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder>() {
-
+    RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantViewHolder {
 
         val view = LayoutInflater.from(parent.context).inflate(R.layout.row_items, parent, false)
@@ -32,16 +25,8 @@ class RestaurantAdapter(var restaurants: List<Restaurant>, var clickListener: Cl
     override fun onBindViewHolder(holder: RestaurantViewHolder, position: Int) {
         holder.itemView.setOnClickListener {
             clickListener.clickedItem(restaurants[position])
-            //(Navigation.findNavController(context).navigate(R.id.action_mainScreenFragment_to_detailScreen) restaurants[position])
         }
         return holder.bind(restaurants[position])
-    }
-
-    fun addData(listItems: List<Restaurant>) {
-        var size = restaurants.size
-        restaurants=restaurants+listItems
-        var sizeNew = restaurants.size
-        notifyItemRangeChanged(size, sizeNew)
     }
 
     class RestaurantViewHolder(var clickListener: ClickListener, itemView: View) :
@@ -50,6 +35,7 @@ class RestaurantAdapter(var restaurants: List<Restaurant>, var clickListener: Cl
         private val name: TextView = itemView.findViewById(R.id.name)
         private val address: TextView = itemView.findViewById(R.id.address)
         private val phone: TextView = itemView.findViewById(R.id.phone)
+        private val price: TextView = itemView.findViewById(R.id.price)
         private val favouriteButton: AppCompatImageButton = itemView.findViewById(R.id.fav)
 
         fun bind(restaurant: Restaurant) {
@@ -57,6 +43,7 @@ class RestaurantAdapter(var restaurants: List<Restaurant>, var clickListener: Cl
             name.text = restaurant.name
             address.text = "Address: " + restaurant.address
             phone.text = "Phone number :" + restaurant.phone
+            price.text = "Price :" + restaurant.price
 
             setFavouriteButton(restaurant.isFavourite, favouriteButton)
 
@@ -75,26 +62,6 @@ private fun setFavouriteButton(isFavourite: Boolean, favouriteButton: ImageButto
     } else {
         favouriteButton.setImageResource(android.R.drawable.btn_star_big_off)
     }
-}
-
-private fun restaurantTableAdapter(restaurant: Restaurant): RestaurantTable {
-    return RestaurantTable(
-        restaurant.id.toInt(),
-        restaurant.name,
-        restaurant.address,
-        restaurant.city,
-        restaurant.state,
-        restaurant.area,
-        restaurant.postal_code,
-        restaurant.country,
-        restaurant.phone,
-        restaurant.lat.toFloat(),
-        restaurant.lng.toFloat(),
-        restaurant.price.toFloat(),
-        restaurant.reserve_url,
-        restaurant.mobile_reserve_url,
-        restaurant.image_url
-    )
 }
 
 interface ClickListener {
